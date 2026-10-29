@@ -1,0 +1,22 @@
+# --- Private data: never committed. Screenshots, names, review sheets, forgeries. ---
+data/*
+!data/README.md
+images/
+
+# Run logs (env reports, metrics). Numbers that go in docs are re-made by scripts.
+results/
+
+# Python / uv
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/

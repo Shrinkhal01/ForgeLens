@@ -1,0 +1,14 @@
+# ForgeLens defaults. Override order (later wins):
+#   this file  <  --config my.yaml  <  env FORGELENS_<SECTION>_<KEY>  <  CLI flags
+# Example env override:  FORGELENS_REDACT_PAD_PX=10
+
+seed: 0
+
+redact:
+  pad_px: 6               # minimum padding around every detected box, in pixels
+  pad_frac: 0.15          # ...or 15% of the box height, whichever is larger
+  fill: [0, 0, 0]         # solid black. Never blur: blur and pixelation can be reversed.
+  name_similarity: 0.80   # fuzzy-match threshold (0..1) for names in names.txt
+  ocr_psm: 11             # tesseract page mode 11 = sparse text (scattered UI labels)
+  upscale_below_px: 1000  # images narrower than this also get a 2x OCR view
+  allow_empty: false      # an image with zero detections is NEEDS_REVIEW, not PASS

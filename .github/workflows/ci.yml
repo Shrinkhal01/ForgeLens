@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    env:
+      FORCE_CPU: "1"
+      FORGELENS_REQUIRE_TESSERACT: "1"  # in CI, OCR tests must run, never skip
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install tesseract (Ubuntu)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y tesseract-ocr
+
+      - name: Install tesseract (macOS)
+        if: runner.os == 'macOS'
+        run: brew install tesseract
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      - run: uv sync --locked
+      - run: uv run forgelens-env
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - name: requirements.txt matches uv.lock
+        run: uv export --no-dev --no-emit-project --no-hashes --no-header --quiet | diff - requirements.txt
+      - run: uv run pytest

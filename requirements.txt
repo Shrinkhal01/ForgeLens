@@ -1,0 +1,12 @@
+numpy==2.5.4
+    # via forgelens
+packaging==26.3
+    # via pytesseract
+pillow==13.0.0
+    # via
+    #   forgelens
+    #   pytesseract
+pytesseract==0.3.13
+    # via forgelens
+pyyaml==6.0.3
+    # via forgelens
